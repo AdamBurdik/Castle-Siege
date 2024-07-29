@@ -1,3 +1,3 @@
 # Castle Siege Minigame Plugin README
 
-Read more and download it from here: https://www.spigotmc.org/resources/castle-siege.115123/
+This plugin is inspired by https://github.com/cbhud/Castle-Siege
