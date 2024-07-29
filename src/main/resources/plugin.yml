@@ -1,0 +1,9 @@
+name: CastleSiege
+main: me.adamix.castlesiege.Main
+author: AdamIx
+version: 1.2.1
+api-version: 1.20
+commands:
+    cs:
+        description: Castle Siege main command
+        permission: castlesiege

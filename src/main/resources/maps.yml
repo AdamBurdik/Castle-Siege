@@ -1,0 +1,19 @@
+default:
+    name: "Default GameMap"
+    material: "grass_block"
+    attackers:
+        location:
+            world: "world"
+            x: 0
+            y: 0
+            z: 0
+            pitch: 0
+            yaw: 0
+    defenders:
+        location:
+            world: "world"
+            x: 0
+            y: 0
+            z: 0
+            pitch: 0
+            yaw: 0

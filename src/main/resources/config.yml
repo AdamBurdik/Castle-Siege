@@ -1,0 +1,78 @@
+
+#   Source Code: https://github.com/AdamBurdik/Castle-Siege
+#
+#   THIS PLUGIN DOES NOT SUPPORT LEGACY FORMATTING ( &6, &l etc. )
+#   PLEASE USE KYORI-ADVENTURE FORMAT: https://docs.advntr.dev/minimessage/format.html
+
+
+# Maximum amount of players in one team
+max_players_per_team: 16
+
+AUTO_START:
+    enabled: true
+    # Minimum amount of players in one team to automatically start the game
+    min_players_per_team:
+    # Countdown duration in seconds before automatically starting the game
+    AUTO_START_COUNTDOWN: 10
+
+
+# Franks = Defenders
+# Vikings = Attackers
+
+DEFENDERS:
+    name: "Franks"
+    king_health: 80
+
+ATTACKERS:
+    name: "Vikings"
+
+SCOREBOARD:
+    title: "Castle Siege"
+    lines:
+        - ""
+        - ""
+        - ""
+        - ""
+        - ""
+        - ""
+
+scoreboard-title: 'Castle Siege'
+scoreboard-bottomline: 'serverip.net'
+
+##AQUA 	#BLACK 	#BLUE 	#DARK_AQUA
+#DARK_BLUE 	#DARK_GRAY 	#DARK_GREEN DARK_PURPLE
+#DARK_RED 	#GOLD 	#GRAY 	#GREEN
+#ITALIC 	#LIGHT_PURPLE 	#RED
+#WHITE 	#YELLOW
+title-color: GOLD
+bottom-color: AQUA
+
+main-color: YELLOW
+secondary-color: WHITE
+
+
+##SET THIS INGAME VIA COMMANDS
+
+
+spawnLocations:
+  vikings:
+    world: world
+    x: 0.0
+    y: 64.0
+    z: 0.0
+    yaw: 0.0
+    pitch: 0.0
+  franks:
+    world: world
+    x: 0.0
+    y: 64.0
+    z: 0.0
+    yaw: 0.0
+    pitch: 0.0
+  lobby:
+    world: 'world'
+    x: 0.0
+    y: 64.0
+    z: 0.0
+    yaw: 0.0
+    pitch: 0.0
