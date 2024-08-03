@@ -1,19 +1,7 @@
 default:
     name: "Default GameMap"
     material: "grass_block"
+
+    # PLEASE DO NOT EDIT THIS MANUALLY! USE /cs COMMAND
     attackers:
-        location:
-            world: "world"
-            x: 0
-            y: 0
-            z: 0
-            pitch: 0
-            yaw: 0
     defenders:
-        location:
-            world: "world"
-            x: 0
-            y: 0
-            z: 0
-            pitch: 0
-            yaw: 0
