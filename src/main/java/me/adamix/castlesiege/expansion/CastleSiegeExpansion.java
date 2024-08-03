@@ -1,4 +1,4 @@
-package me.adamix.castlesiege.expansions;
+package me.adamix.castlesiege.expansion;
 
 import me.adamix.castlesiege.player.GamePlayer;
 import me.adamix.castlesiege.player.GamePlayerManager;
@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class PlayerTeamExpansion extends PlaceholderExpansion {
+public class CastleSiegeExpansion extends PlaceholderExpansion {
 	@Override
 	public @NotNull String getIdentifier() {
 		return "cs";
