@@ -1,2 +1,2 @@
 GAME_STARTING_IN: "<green>Game starting in"
-GAME_STARTED: "<green>Game started! You are in {team}!"
+GAME_STARTED: "<green>Game started! You are in %sc_playerteam%!"

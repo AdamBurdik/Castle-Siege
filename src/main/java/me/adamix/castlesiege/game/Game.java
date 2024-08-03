@@ -1,6 +1,6 @@
 package me.adamix.castlesiege.game;
 
-import me.adamix.castlesiege.Main;
+import me.adamix.castlesiege.CastleSiege;
 import me.adamix.castlesiege.PluginConfiguration;
 import me.adamix.castlesiege.exceptions.FullTeamException;
 import me.adamix.castlesiege.exceptions.GameIsActive;
@@ -10,9 +10,7 @@ import me.adamix.castlesiege.player.GamePlayer;
 import me.adamix.castlesiege.team.Team;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.title.Title;
-import net.kyori.adventure.title.TitlePart;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import java.time.Duration;
@@ -57,7 +55,7 @@ public class Game {
 		int[] countdown = {10};
 		int[] taskId = new int[1];
 
-		taskId[0] = Bukkit.getScheduler().runTaskTimer(Main.getInstance(), () -> {
+		taskId[0] = Bukkit.getScheduler().runTaskTimer(CastleSiege.getInstance(), () -> {
 			if (countdown[0] < 1) {
 
 				attackerPlayers.forEach(gamePlayer -> {

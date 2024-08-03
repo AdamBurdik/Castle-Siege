@@ -1,5 +1,5 @@
 name: CastleSiege
-main: me.adamix.castlesiege.Main
+main: me.adamix.castlesiege.CastleSiege
 author: AdamIx
 version: 1.2.1
 api-version: 1.20
