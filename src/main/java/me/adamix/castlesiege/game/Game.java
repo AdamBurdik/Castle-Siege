@@ -29,8 +29,11 @@ public class Game {
 
 	public Game(GameMap map) {
 		this.map = map;
-		this.attackers = new Team("attackers");
-		this.defenders = new Team("defenders");
+
+		YamlConfiguration pluginConfig = PluginConfiguration.getConfig();
+
+		this.attackers = new Team(pluginConfig.getString("ATTACKERS.name"));
+		this.defenders = new Team(pluginConfig.getString("DEFENDERS.name"));
 		this.state = GameState.PENDING;
 	}
 

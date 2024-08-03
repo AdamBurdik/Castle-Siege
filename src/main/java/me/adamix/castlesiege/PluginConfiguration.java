@@ -8,9 +8,9 @@ import java.io.IOException;
 
 public class PluginConfiguration {
 	private static YamlConfiguration config;
-	private static File file;
 
 	public static void init(Plugin plugin) {
+		plugin.saveDefaultConfig();
 		config = (YamlConfiguration) plugin.getConfig();
 	}
 
