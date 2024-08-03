@@ -9,7 +9,7 @@ public class GamePlayer {
 
 	public GamePlayer(Player player) {
 		this.player = player;
-		GamePlayerManager.addPlayer(player);
+		GamePlayerManager.addPlayer(this);
 	}
 
 	public Player getPlayer() {

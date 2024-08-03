@@ -12,7 +12,7 @@ public class GamePlayerManager {
 		return gamePlayers.get(player);
 	}
 
-	public static void addPlayer(Player player) {
-		gamePlayers.put(player, new GamePlayer(player));
+	public static void addPlayer(GamePlayer gamePlayer) {
+		gamePlayers.put(gamePlayer.getPlayer(), gamePlayer);
 	}
 }
