@@ -1,6 +1,7 @@
 package me.adamix.castlesiege.game;
 
 import me.adamix.castlesiege.CastleSiege;
+import me.adamix.castlesiege.MessageConfiguration;
 import me.adamix.castlesiege.PluginConfiguration;
 import me.adamix.castlesiege.exceptions.FullTeamException;
 import me.adamix.castlesiege.exceptions.GameIsActive;
@@ -8,9 +9,11 @@ import me.adamix.castlesiege.exceptions.NotEnoughPlayers;
 import me.adamix.castlesiege.map.GameMap;
 import me.adamix.castlesiege.player.GamePlayer;
 import me.adamix.castlesiege.team.Team;
+import me.clip.placeholderapi.PlaceholderAPI;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.title.Title;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
 import java.time.Duration;
@@ -55,18 +58,26 @@ public class Game {
 		int[] countdown = {10};
 		int[] taskId = new int[1];
 
+		YamlConfiguration messageConfig = MessageConfiguration.getConfig();
+
 		taskId[0] = Bukkit.getScheduler().runTaskTimer(CastleSiege.getInstance(), () -> {
 			if (countdown[0] < 1) {
 
+
 				attackerPlayers.forEach(gamePlayer -> {
 					Player player = gamePlayer.getPlayer();
+					String message = PlaceholderAPI.setPlaceholders(player, messageConfig.getString("GAME_STARTED"));
+
 					player.teleport(map.getAttackersSpawn());
-					player.sendMessage(miniMessage.deserialize("<green>Game started! You are in <red>attackers"));
+					player.sendMessage(miniMessage.deserialize(message));
 				});
 				defendersPlayers.forEach(gamePlayer -> {
 					Player player = gamePlayer.getPlayer();
+					String message = PlaceholderAPI.setPlaceholders(player, messageConfig.getString("GAME_STARTED"));
+
+
 					player.teleport(map.getDefendersSpawn());
-					player.sendMessage(miniMessage.deserialize("<green>Game started! You are in <blue>defenders"));
+					player.sendMessage(miniMessage.deserialize(message));
 				});
 				Bukkit.getScheduler().cancelTask(taskId[0]);
 				return;
@@ -76,8 +87,8 @@ public class Game {
 				Player player = gamePlayer.getPlayer();
 				player.showTitle(
 						Title.title(
-								miniMessage.deserialize("<green>Starting game in"),
-								miniMessage.deserialize("<yellow>" + countdown[0]),
+								miniMessage.deserialize(messageConfig.getString("GAME_STARTING_IN_TITLE")),
+								miniMessage.deserialize(messageConfig.getString("GAME_STARTING_IN_SUBTITLE") + countdown[0]),
 										Title.Times.times(
 												Duration.ZERO, Duration.ofMillis(500L), Duration.ofMillis(250L)
 										)
@@ -88,8 +99,8 @@ public class Game {
 				Player player = gamePlayer.getPlayer();
 				player.showTitle(
 						Title.title(
-								miniMessage.deserialize("<green>Starting game in"),
-								miniMessage.deserialize("<yellow>" + countdown[0]),
+								miniMessage.deserialize(messageConfig.getString("GAME_STARTING_IN_TITLE")),
+								miniMessage.deserialize(messageConfig.getString("GAME_STARTING_IN_VALUE") + countdown[0]),
 								Title.Times.times(
 										Duration.ZERO, Duration.ofMillis(500L), Duration.ofMillis(250L)
 								)
