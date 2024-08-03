@@ -1,4 +1,4 @@
 GAME_STARTING_IN_TITLE: "<green>Game starting in"
 GAME_STARTING_IN_SUBTITLE: "<yellow>"
 
-GAME_STARTED: "<green>Game started! You are in %sc_playerteam%!"
+GAME_STARTED: "<green>Game started! You are in %cs_playerteam%!"
