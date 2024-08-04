@@ -1,5 +1,8 @@
 package me.adamix.castlesiege.commands;
 
+import me.adamix.castlesiege.CastleSiege;
+import me.adamix.castlesiege.MessageConfiguration;
+import me.adamix.castlesiege.PluginConfiguration;
 import me.adamix.castlesiege.exceptions.FullTeamException;
 import me.adamix.castlesiege.exceptions.GameIsActive;
 import me.adamix.castlesiege.exceptions.NotEnoughPlayers;
@@ -36,6 +39,8 @@ public class CastleSiegeCommand implements CommandExecutor, TabExecutor {
 
 		String subCommand = args[0].toLowerCase();
 		switch (subCommand) {
+			case "reload":
+				return reloadSubCommand(sender, args);
 			case "creategame":
 				return createGameSubcommand(sender, args);
 			case "startgame":
@@ -62,6 +67,17 @@ public class CastleSiegeCommand implements CommandExecutor, TabExecutor {
 			default:
 				sender.sendMessage(MiniMessage.miniMessage().deserialize("<red>Unknown subcommand!"));
 		}
+
+		return false;
+	}
+
+	private boolean reloadSubCommand(CommandSender sender, String[] args) {
+		CastleSiege plugin = CastleSiege.getInstance();
+		PluginConfiguration.init(plugin);
+		MessageConfiguration.init(plugin);
+		MapConfiguration.init(plugin);
+
+		sender.sendMessage(MiniMessage.miniMessage().deserialize("<green>Plugin configuration reloaded!"));
 
 		return false;
 	}
@@ -158,6 +174,6 @@ public class CastleSiegeCommand implements CommandExecutor, TabExecutor {
 	@Nullable
 	@Override
 	public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
-		return List.of("createGame", "startGame", "setTeamLocation", "openKitEditor", "debug_loadMap");
+		return List.of("createGame", "startGame", "setTeamLocation", "openKitEditor", "debug_loadMap", "reload");
 	}
 }

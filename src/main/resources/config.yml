@@ -8,12 +8,15 @@
 # Maximum amount of players in one team
 max_players_per_team: 16
 
-AUTO_START:
-    enabled: true
-    # Minimum amount of players in one team to automatically start the game
+START:
+    # Minimum amount of players in one team to start the game
     min_players_per_team: 5
-    # Countdown duration in seconds before automatically starting the game
-    AUTO_START_COUNTDOWN: 10
+    # Countdown duration in seconds before starting the game ( in seconds )
+    cooldown: 10
+
+    title_fade_in: 0
+    title_stay: 500
+    title_fade_out: 250
 
 DEFENDERS:
     name: "Franks"

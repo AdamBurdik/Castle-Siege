@@ -1,7 +1,0 @@
-JOIN_GAME:
-    material: lime_dye
-    name: "Join Game"
-    custom_model_data: 500
-    lore:
-        - line1
-        - line2

@@ -10,8 +10,9 @@ public class PluginConfiguration {
 	private static YamlConfiguration config;
 
 	public static void init(Plugin plugin) {
-		plugin.saveDefaultConfig();
-		config = (YamlConfiguration) plugin.getConfig();
+		plugin.saveResource("config.yml", false);
+		File file = new File(plugin.getDataFolder(), "config.yml");
+		config = YamlConfiguration.loadConfiguration(file);
 	}
 
 	public static YamlConfiguration getConfig() {

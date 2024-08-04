@@ -46,8 +46,10 @@ public class Game {
 			throw new GameIsActive();
 		}
 
+		YamlConfiguration pluginConfig = PluginConfiguration.getConfig();
+
 		if (!force) {
-			int minPlayerPerTeam = PluginConfiguration.getConfig().getInt("AUTO_START.min_players_per_team");
+			int minPlayerPerTeam = pluginConfig.getInt("START.min_players_per_team");
 			if (attackers.getPlayerCount() < minPlayerPerTeam || defenders.getPlayerCount() < minPlayerPerTeam) {
 				throw new NotEnoughPlayers();
 			}
@@ -58,10 +60,10 @@ public class Game {
 
 		MiniMessage miniMessage = MiniMessage.miniMessage();
 
-		int[] countdown = {10};
-		int[] taskId = new int[1];
-
 		YamlConfiguration messageConfig = MessageConfiguration.getConfig();
+
+		int[] countdown = {pluginConfig.getInt("START.cooldown")};
+		int[] taskId = new int[1];
 
 		taskId[0] = Bukkit.getScheduler().runTaskTimer(CastleSiege.getInstance(), () -> {
 			if (countdown[0] < 1) {
@@ -93,7 +95,9 @@ public class Game {
 								miniMessage.deserialize(messageConfig.getString("GAME_STARTING_IN_TITLE")),
 								miniMessage.deserialize(messageConfig.getString("GAME_STARTING_IN_SUBTITLE") + countdown[0]),
 										Title.Times.times(
-												Duration.ZERO, Duration.ofMillis(500L), Duration.ofMillis(250L)
+												Duration.ofMillis(pluginConfig.getLong("START.title_fade_in")),
+												Duration.ofMillis(pluginConfig.getLong("START.title_stay")),
+												Duration.ofMillis(pluginConfig.getLong("START.title_fade_out"))
 										)
 						)
 				);
@@ -105,7 +109,9 @@ public class Game {
 								miniMessage.deserialize(messageConfig.getString("GAME_STARTING_IN_TITLE")),
 								miniMessage.deserialize(messageConfig.getString("GAME_STARTING_IN_VALUE") + countdown[0]),
 								Title.Times.times(
-										Duration.ZERO, Duration.ofMillis(500L), Duration.ofMillis(250L)
+										Duration.ofMillis(pluginConfig.getLong("START.title_fade_in")),
+										Duration.ofMillis(pluginConfig.getLong("START.title_stay")),
+										Duration.ofMillis(pluginConfig.getLong("START.title_fade_out"))
 								)
 						)
 				);
