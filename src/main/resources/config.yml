@@ -21,7 +21,9 @@ START:
 DEFENDERS:
     name: "Franks"
     king_health: 80
+    default_kit: "default_defenders"
 
 ATTACKERS:
     name: "Vikings"
+    default_kit: "default_attackers"
 

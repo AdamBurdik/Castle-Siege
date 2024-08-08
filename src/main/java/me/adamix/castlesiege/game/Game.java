@@ -6,6 +6,7 @@ import me.adamix.castlesiege.PluginConfiguration;
 import me.adamix.castlesiege.exceptions.FullTeamException;
 import me.adamix.castlesiege.exceptions.GameIsActive;
 import me.adamix.castlesiege.exceptions.NotEnoughPlayers;
+import me.adamix.castlesiege.kits.KitManager;
 import me.adamix.castlesiege.map.GameMap;
 import me.adamix.castlesiege.player.GamePlayer;
 import me.adamix.castlesiege.team.Team;
@@ -26,6 +27,7 @@ public class Game {
 	private final Team attackers;
 	private final Team defenders;
 	private GameState state;
+	private int[] countdownTaskId;
 
 	public Game(GameMap map) {
 		this.map = map;
@@ -63,28 +65,49 @@ public class Game {
 		YamlConfiguration messageConfig = MessageConfiguration.getConfig();
 
 		int[] countdown = {pluginConfig.getInt("START.cooldown")};
-		int[] taskId = new int[1];
+		countdownTaskId = new int[1];
 
-		taskId[0] = Bukkit.getScheduler().runTaskTimer(CastleSiege.getInstance(), () -> {
+		countdownTaskId[0] = Bukkit.getScheduler().runTaskTimer(CastleSiege.getInstance(), () -> {
 			if (countdown[0] < 1) {
-
+				Bukkit.getScheduler().cancelTask(countdownTaskId[0]);
 
 				attackerPlayers.forEach(gamePlayer -> {
 					Player player = gamePlayer.getPlayer();
-					String message = PlaceholderAPI.setPlaceholders(player, messageConfig.getString("GAME_STARTED"));
+					String gameStartMessage = messageConfig.getString("GAME_STARTED");
+					if (gameStartMessage == null) {
+						throw new RuntimeException("Please specify valid GAME_START messages.yml!");
+					}
+
+					String message = PlaceholderAPI.setPlaceholders(player, gameStartMessage);
 
 					player.teleport(map.getAttackersSpawn());
 					player.sendMessage(miniMessage.deserialize(message));
+					String kitName = pluginConfig.getString("DEFENDERS.default_kit");
+					if (kitName != null) {
+						KitManager.setKit(player, kitName);
+					}
+
+					gamePlayer.showScoreboard();
 				});
 				defendersPlayers.forEach(gamePlayer -> {
 					Player player = gamePlayer.getPlayer();
-					String message = PlaceholderAPI.setPlaceholders(player, messageConfig.getString("GAME_STARTED"));
+					String gameStartMessage = messageConfig.getString("GAME_STARTED");
+					if (gameStartMessage == null) {
+						throw new RuntimeException("Please specify valid GAME_START messages.yml!");
+					}
 
+					String message = PlaceholderAPI.setPlaceholders(player, gameStartMessage);
 
 					player.teleport(map.getDefendersSpawn());
 					player.sendMessage(miniMessage.deserialize(message));
+
+					String kitName = pluginConfig.getString("DEFENDERS.default_kit");
+					if (kitName != null) {
+						KitManager.setKit(player, kitName);
+					}
+
+					gamePlayer.showScoreboard();
 				});
-				Bukkit.getScheduler().cancelTask(taskId[0]);
 				return;
 			}
 
@@ -120,6 +143,10 @@ public class Game {
 			countdown[0]--;
 
 		}, 0L, 20L).getTaskId();
+	}
+
+	public void stop() {
+		Bukkit.getScheduler().cancelTask(countdownTaskId[0]);
 	}
 
 	public void addPlayerToAttackers(Player player) throws FullTeamException {

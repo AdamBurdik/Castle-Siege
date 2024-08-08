@@ -4,6 +4,7 @@ author: AdamIx
 version: 1.2.1
 api-version: 1.20
 depend: [PlaceholderAPI]
+
 commands:
     cs:
         description: Castle Siege main command

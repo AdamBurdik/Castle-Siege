@@ -2,3 +2,18 @@ GAME_STARTING_IN_TITLE: "<green>Game starting in"
 GAME_STARTING_IN_SUBTITLE: "<yellow>"
 
 GAME_STARTED: "<green>Game started! You are in %cs_playerteam%!"
+
+SCOREBOARD_TITLE: "<gold>Castle Siege"
+SCOREBOARD_LINES:
+    - "Line 1"
+    - "Line 2"
+    - "Line 3"
+    - "Line 4"
+    - "Line 5"
+    - "Line 6"
+    - "Line 7"
+    - "Line 8"
+    - "Line 9"
+    - "Line 10"
+
+

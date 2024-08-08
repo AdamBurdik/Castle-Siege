@@ -4,16 +4,15 @@ import me.adamix.castlesiege.CastleSiege;
 import me.adamix.castlesiege.MessageConfiguration;
 import me.adamix.castlesiege.PluginConfiguration;
 import me.adamix.castlesiege.exceptions.FullTeamException;
-import me.adamix.castlesiege.exceptions.GameIsActive;
-import me.adamix.castlesiege.exceptions.NotEnoughPlayers;
 import me.adamix.castlesiege.game.Game;
 import me.adamix.castlesiege.game.GameManager;
+import me.adamix.castlesiege.inventories.KitEditorInventory;
+import me.adamix.castlesiege.kits.KitConfiguration;
 import me.adamix.castlesiege.map.GameMap;
 import me.adamix.castlesiege.map.MapConfiguration;
 import me.adamix.castlesiege.map.MapManager;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -21,6 +20,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -47,6 +47,11 @@ public class CastleSiegeCommand implements CommandExecutor, TabExecutor {
 				return startSubcommand(sender, args);
 			case "setteamlocation":
 				return setLocationSubCommand(sender, args);
+			case "kiteditor":
+				KitEditorInventory.open((Player) sender, args[1]);
+				return false;
+			case "savekit":
+				return saveKitSubCommand(sender, args);
 			case "debug_loadmap":
 				if (args.length < 2) {
 					sender.sendMessage(minimessage.deserialize("<red>Invalid usage! Please specify argument /cs debug_loadmap <map>"));
@@ -76,6 +81,7 @@ public class CastleSiegeCommand implements CommandExecutor, TabExecutor {
 		PluginConfiguration.init(plugin);
 		MessageConfiguration.init(plugin);
 		MapConfiguration.init(plugin);
+		KitConfiguration.init(plugin);
 
 		sender.sendMessage(MiniMessage.miniMessage().deserialize("<green>Plugin configuration reloaded!"));
 
@@ -171,9 +177,38 @@ public class CastleSiegeCommand implements CommandExecutor, TabExecutor {
 		return false;
 	}
 
+	private boolean saveKitSubCommand(CommandSender sender, String[] args) {
+		MiniMessage miniMessage = MiniMessage.miniMessage();
+
+		if (args.length < 2) {
+			sender.sendMessage(miniMessage.deserialize("<red>Invalid usage! Please specify kit /cs saveKit <kit>"));
+			return true;
+		}
+
+		if (!(sender instanceof Player player)) {
+			sender.sendMessage(miniMessage.deserialize("<red>Only players can use this sub command!"));
+			return true;
+		}
+
+		String kitName = args[1];
+
+		ItemStack[] inventoryContent = player.getInventory().getContents();
+
+		YamlConfiguration kitConfig = KitConfiguration.getConfig();
+
+		String path = kitName + ".content";
+		kitConfig.set(path, inventoryContent);
+		kitConfig.setInlineComments(path, List.of("PLEASE DO NOT EDIT THIS MANUALLY! USE /cs saveKit <kit> COMMAND!"));
+		KitConfiguration.save();
+
+		sender.sendMessage(miniMessage.deserialize("<green>Your current inventory has been set as content of <bold>" + kitName + "<reset><green> kit"));
+
+		return false;
+	}
+
 	@Nullable
 	@Override
 	public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
-		return List.of("createGame", "startGame", "setTeamLocation", "openKitEditor", "debug_loadMap", "reload");
+		return List.of("createGame", "startGame", "setTeamLocation", "debug_loadMap", "reload", "saveKit");
 	}
 }

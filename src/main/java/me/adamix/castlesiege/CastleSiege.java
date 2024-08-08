@@ -2,7 +2,10 @@ package me.adamix.castlesiege;
 
 import me.adamix.castlesiege.commands.CastleSiegeCommand;
 import me.adamix.castlesiege.expansion.CastleSiegeExpansion;
+import me.adamix.castlesiege.inventories.KitEditorInventory;
+import me.adamix.castlesiege.kits.KitConfiguration;
 import me.adamix.castlesiege.map.MapConfiguration;
+import me.adamix.castlesiege.player.PlayerListener;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -21,10 +24,12 @@ public class CastleSiege extends JavaPlugin {
         PluginConfiguration.init(this);
         MapConfiguration.init(this);
         MessageConfiguration.init(this);
-
+        KitConfiguration.init(this);
 
         Objects.requireNonNull(getCommand("cs")).setExecutor(new CastleSiegeCommand());
         Objects.requireNonNull(getCommand("cs")).setTabCompleter(new CastleSiegeCommand());
+        Bukkit.getPluginManager().registerEvents(new KitEditorInventory(), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerListener(), this);
 
         if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
             new CastleSiegeExpansion().register();
